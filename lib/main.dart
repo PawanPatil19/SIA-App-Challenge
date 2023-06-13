@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sia_app/views/layout.dart';
 import 'package:sia_app/views/login_page.dart';
+import 'package:sia_app/views/register_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       routes: {
         'home_screen': (context) => const Layout(),
         'login_page': (context) => const LoginPage(),
-        
+        'register_page': (context) => const RegisterPage(),
       },
       home: const Layout()
   

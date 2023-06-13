@@ -3,14 +3,14 @@ import 'package:sia_app/constants.dart';
 
 
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   String email = '';
 
   @override
@@ -40,6 +40,45 @@ class _LoginPageState extends State<LoginPage> {
                 ),
         
                 SizedBox(height: 50,),
+
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Stack(
+                    children: <Widget>[
+                      Container(
+                        width: double.infinity,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      Positioned(
+                        top: 3,
+                        left: 30,
+                        child: Text(
+                          'Company Name',
+                          style: TextStyle(fontSize: 14, color: Colors.grey),
+                        ),
+                      ),
+                      Positioned(
+                        left: 30,
+                        bottom: 3,
+                        right: 30,
+                        child: TextField(
+                          decoration: InputDecoration(
+                              border: InputBorder.none, hintText: 'Enter company name'),
+                          onChanged: (s) {
+                            email = s;
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+        
+                SizedBox(height: 20,),
         
                 Container(
                   width: MediaQuery.of(context).size.width * 0.8,
@@ -126,7 +165,7 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {
                       Navigator.pushNamed(context, '/home');
                     },
-                    child: Text('Login', style: TextStyle(color: Colors.white, fontSize: 20),),
+                    child: Text('Register', style: TextStyle(color: Colors.white, fontSize: 20),),
                     style: ElevatedButton.styleFrom(
                       primary: kButtonColor,
                       shape: RoundedRectangleBorder(
@@ -137,20 +176,6 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
 
-
-
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, 'register_page');
-                  }, 
-                  child: Text('Not yet Registered?', style: TextStyle(color: kTextColor, fontSize: 15),)
-                ),
-
-                SizedBox(height: 20,),
-
-                IconButton(onPressed: () {}, icon: Icon(Icons.fingerprint, color: kSecondaryColor, size: 50,)),
-        
-        
               ],
           ),
         ),

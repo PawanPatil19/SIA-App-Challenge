@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sia_app/constants.dart';
+import 'package:sia_app/views/layout.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -30,22 +31,26 @@ class _HomePageState extends State<HomePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      width: 70,
-                      
-                      child: Column(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: kPrimaryColor,
-                            ),
-                            padding: EdgeInsets.all(15),
-                            child: Icon(Icons.discount_outlined, color: Colors.grey, size: 35,)
-                            ),
-                          SizedBox(height: 10,),
-                          Text('Offers & promotions', style: TextStyle(color: kPrimaryColor, fontSize: 15), textAlign: TextAlign.center,),
-                        ],
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.pushNamed(context, 'home_screen',);
+                      },
+                      child: Container(
+                        width: 70,
+                        child: Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: kPrimaryColor,
+                              ),
+                              padding: EdgeInsets.all(15),
+                              child: Icon(Icons.discount_outlined, color: Colors.grey, size: 35,)
+                              ),
+                            SizedBox(height: 10,),
+                            Text('Offers & promotions', style: TextStyle(color: kPrimaryColor, fontSize: 15), textAlign: TextAlign.center,),
+                          ],
+                        ),
                       ),
                     ),
                     SizedBox(width: 50,),
@@ -119,7 +124,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       Positioned(
-            top: 350,
+            top: MediaQuery.of(context).size.height * 0.4,
             right:0,
             child: RawMaterialButton(
               onPressed: (){

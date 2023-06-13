@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:sia_app/constants.dart';
 import 'package:sia_app/views/home_page.dart';
 import 'package:sia_app/views/login_page.dart';
+import 'package:sia_app/views/offers_page.dart';
 
-
+// class LayoutArguments {
+//   final int index = 0;
+//   LayoutArguments(this.index);
+// }
 
 
 class Layout extends StatefulWidget {
@@ -15,6 +19,7 @@ class Layout extends StatefulWidget {
 }
 
 class _LayoutState extends State<Layout> {
+  
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -29,10 +34,13 @@ class _LayoutState extends State<Layout> {
     LoginPage(),
     LoginPage(),
     LoginPage(),
+    OfferPage(),
   ];
 
   @override
   Widget build(BuildContext context){
+    //final args = ModalRoute.of(context)!.settings.arguments as LayoutArguments?;
+    
     return Scaffold(
       extendBody: true,
       appBar: AppBar(
@@ -59,34 +67,37 @@ class _LayoutState extends State<Layout> {
         child: _pages.elementAt(_selectedIndex),
       ),
 
-      bottomNavigationBar: CustomNavigationBar(
-        backgroundColor: kPrimaryColor,
-        selectedColor: kSecondaryColor,
-        isFloating: true,
-        
-        borderRadius: Radius.circular(20),
-        unSelectedColor: Colors.grey,
-        items: [
-          CustomNavigationBarItem(
-            icon: Icon(Icons.home),
-          ),
-          CustomNavigationBarItem(
-            icon: Icon(Icons.analytics_outlined),
-          ),
-          CustomNavigationBarItem(
-            icon: Icon(Icons.notifications_none_outlined),
-          ),
-          CustomNavigationBarItem(
-            icon: Icon(Icons.settings_outlined),
-          ),
-          CustomNavigationBarItem(
-            icon: Icon(Icons.logout_outlined),
-          ),
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.symmetric(vertical: 10),
+        child: CustomNavigationBar(
+          backgroundColor: kPrimaryColor,
+          selectedColor: kSecondaryColor,
+          isFloating: true,
           
-          
-        ],
-        currentIndex: _selectedIndex, //New
-        onTap: _onItemTapped,
+          borderRadius: Radius.circular(20),
+          unSelectedColor: Colors.grey,
+          items: [
+            CustomNavigationBarItem(
+              icon: Icon(Icons.home),
+            ),
+            CustomNavigationBarItem(
+              icon: Icon(Icons.analytics_outlined),
+            ),
+            CustomNavigationBarItem(
+              icon: Icon(Icons.notifications_none_outlined),
+            ),
+            CustomNavigationBarItem(
+              icon: Icon(Icons.settings_outlined),
+            ),
+            CustomNavigationBarItem(
+              icon: Icon(Icons.logout_outlined),
+            ),
+            
+            
+          ],
+          currentIndex: _selectedIndex, //New
+          onTap: _onItemTapped,
+        ),
       )
     );
   }

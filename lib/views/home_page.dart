@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sia_app/constants.dart';
 import 'package:sia_app/views/layout.dart';
+import 'package:sia_app/views/login_page.dart' as login;
+
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,7 +17,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Stack(
       children: [Column(
-        
         children: [
           Container(
             height: MediaQuery.of(context).size.height * 0.45,
@@ -33,7 +35,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     GestureDetector(
                       onTap: (){
-                        Navigator.pushNamed(context, 'home_screen',);
+                        Navigator.pushNamed(context, 'home_screen', arguments: LayoutArguments(5));
                       },
                       child: Container(
                         width: 70,

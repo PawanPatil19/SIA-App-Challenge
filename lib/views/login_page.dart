@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sia_app/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sia_app/views/layout.dart';
 
 
+ User? user;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,7 +14,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  FirebaseAuth auth = FirebaseAuth.instance;
   String email = '';
+  String password = '';
+
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                      Positioned(
+                      const Positioned(
                         top: 3,
                         left: 30,
                         child: Text(
@@ -67,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                         bottom: 3,
                         right: 30,
                         child: TextField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               border: InputBorder.none, hintText: 'Enter email'),
                           onChanged: (s) {
                             email = s;
@@ -93,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                      Positioned(
+                      const Positioned(
                         top: 3,
                         left: 30,
                         child: Text(
@@ -107,10 +114,10 @@ class _LoginPageState extends State<LoginPage> {
                         right: 30,
                         child: TextField(
                           obscureText: true,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               border: InputBorder.none, hintText: 'Enter password'),
                           onChanged: (s) {
-                            email = s;
+                            password = s;
                           },
                         ),
                       )
@@ -118,13 +125,26 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
 
-                SizedBox(height: 30,),
+                const SizedBox(height: 30,),
 
                 Container(
                   width: MediaQuery.of(context).size.width * 0.3,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/home');
+                    onPressed: () async {
+                      try {
+                        UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+                          email: this.email,
+                          password: this.password
+                        );
+                        user = userCredential.user;
+                        Navigator.pushNamed(context, 'home_screen', arguments: LayoutArguments(0));
+                      } on FirebaseAuthException catch (e) {
+                        if (e.code == 'user-not-found') {
+                          print('No user found for that email.');
+                        } else if (e.code == 'wrong-password') {
+                          print('Wrong password provided for that user.');
+                        }
+                      }
                     },
                     child: Text('Login', style: TextStyle(color: Colors.white, fontSize: 20),),
                     style: ElevatedButton.styleFrom(

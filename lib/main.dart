@@ -3,7 +3,17 @@ import 'package:sia_app/views/layout.dart';
 import 'package:sia_app/views/login_page.dart';
 import 'package:sia_app/views/register_page.dart';
 
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Firebase initialization
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 

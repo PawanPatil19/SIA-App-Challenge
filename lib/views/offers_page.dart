@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sia_app/constants.dart';
+import 'package:sia_app/views/layout.dart';
+
 
 class OfferPage extends StatefulWidget {
   const OfferPage({super.key});
@@ -16,9 +18,12 @@ class _OfferPageState extends State<OfferPage> {
         
         children: [
           Container(
-            height: MediaQuery.of(context).size.height * 0.45,
+            height: MediaQuery.of(context).size.height * 0.15,
             width: MediaQuery.of(context).size.width,
-            color: kSecondaryColor,
+            decoration: BoxDecoration(
+              color: kSecondaryColor,
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30))
+            ),
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,8 +31,6 @@ class _OfferPageState extends State<OfferPage> {
                 Text('Merchant Name', style: TextStyle(color: kPrimaryColor, fontSize: 30),),
                 Text('Merchant Details', style: TextStyle(color: kPrimaryColor, fontSize: 15),),
                 SizedBox(height: 20,),
-                
-                
               ]),
           ),
     
@@ -35,11 +38,11 @@ class _OfferPageState extends State<OfferPage> {
         ],
       ),
       Positioned(
-            top: MediaQuery.of(context).size.height * 0.4,
+            top: MediaQuery.of(context).size.height * 0.1,
             right:0,
             child: RawMaterialButton(
               onPressed: (){
-                
+                Navigator.pushNamed(context, 'home_screen', arguments: LayoutArguments(6));
               },
               fillColor: kButtonColor,
               elevation: 2,

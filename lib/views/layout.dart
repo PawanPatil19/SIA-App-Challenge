@@ -1,14 +1,15 @@
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:sia_app/constants.dart';
+import 'package:sia_app/views/add_offer_page.dart';
 import 'package:sia_app/views/home_page.dart';
 import 'package:sia_app/views/login_page.dart';
 import 'package:sia_app/views/offers_page.dart';
 
-// class LayoutArguments {
-//   final int index = 0;
-//   LayoutArguments(this.index);
-// }
+class LayoutArguments {
+  final int index;
+  LayoutArguments(this.index);
+}
 
 
 class Layout extends StatefulWidget {
@@ -21,25 +22,37 @@ class Layout extends StatefulWidget {
 class _LayoutState extends State<Layout> {
   
   int _selectedIndex = 0;
+  int _pageIndex = 0;
+  int mainPanelIndex = 0;
+  String currentUser = '';
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      mainPanelIndex = _selectedIndex;
     });
   }
 
-  static const List<Widget> _pages = <Widget>[
+  static final List<Widget> _pages = <Widget>[
     HomePage(),
     LoginPage(),
     LoginPage(),
     LoginPage(),
     LoginPage(),
     OfferPage(),
+    AddOfferPage()
   ];
 
   @override
   Widget build(BuildContext context){
-    //final args = ModalRoute.of(context)!.settings.arguments as LayoutArguments?;
+    final args = ModalRoute.of(context)!.settings.arguments as LayoutArguments?;
+    //print('Arguments: ' + args!.index.toString());
+    if (args != null) _pageIndex = args.index;
+    //mainPanelIndex = _pageIndex;
+    print('Page Index: ' + _pageIndex.toString());
+    print('Selected Index: ' + _selectedIndex.toString());
+    mainPanelIndex = _pageIndex;
+
     
     return Scaffold(
       extendBody: true,
@@ -64,7 +77,7 @@ class _LayoutState extends State<Layout> {
         
       ),
       body: Center(
-        child: _pages.elementAt(_selectedIndex),
+        child: _pages.elementAt(mainPanelIndex),
       ),
 
       bottomNavigationBar: Container(

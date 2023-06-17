@@ -41,6 +41,9 @@ dependencies:
   syncfusion_flutter_datepicker: ^21.2.10 
   cloud_firestore: ^4.8.1
   shared_preferences:
+  firebase_storage:
+  path: 
+  image_picker: 
 
 dev_dependencies:
   flutter_test:

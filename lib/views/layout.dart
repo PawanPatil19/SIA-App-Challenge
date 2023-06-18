@@ -8,7 +8,7 @@ import 'package:sia_app/views/offers_page.dart';
 
 class LayoutArguments {
   final int index;
-  LayoutArguments(this.index);
+  LayoutArguments(this.index,);
 }
 
 

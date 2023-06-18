@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sia_app/constants.dart';
+import 'package:sia_app/views/view_offer_page.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,6 +21,8 @@ class _AddOfferPageState extends State<AddOfferPage> {
   DateTime endDate = DateTime.now();
   List<String> locations = [];
   String terms = '';
+
+  String? offerID;
 
 
   bool isCheckedSingapore = false;
@@ -51,15 +54,17 @@ class _AddOfferPageState extends State<AddOfferPage> {
             'terms': terms, 
             'createdBy': currentUser
           })
-          .then((value) => print("Offer Added for user: $currentUser"))
+          .then((docRef) => setState(() {
+            offerID = docRef.id;
+            print('Offer ID: ' + offerID!);
+            Navigator.pushNamed(context, 'view_offer', arguments: ViewOfferArguments(offerID!));
+          }))
           .catchError((error) => print("Failed to add offeer: $error"));
     }
 
 
   @override
   Widget build(BuildContext context) {
-    print('Locations: ' + locations.toString());
-    print('Current User: ' + currentUser);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       width: MediaQuery.of(context).size.width,

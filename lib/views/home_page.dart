@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sia_app/constants.dart';
 import 'package:sia_app/views/layout.dart';
 import 'package:sia_app/views/login_page.dart' as login;
+import 'package:sia_app/views/view_offer_page.dart';
 
 
 
@@ -13,6 +15,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  var merchantData = login.merchantData;
+  get entityName => merchantData?['entityName'];
+  get entityAddress => merchantData?['entityAddress'];
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -26,8 +33,8 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Merchant Name', style: TextStyle(color: kPrimaryColor, fontSize: 30),),
-                Text('Merchant Details', style: TextStyle(color: kPrimaryColor, fontSize: 15),),
+                Text(entityName, style: const TextStyle(color: kPrimaryColor, fontSize: 30),),
+                Text(entityAddress, style: TextStyle(color: kPrimaryColor, fontSize: 15),),
                 SizedBox(height: 20,),
                 
                 Row(
@@ -35,10 +42,10 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     GestureDetector(
                       onTap: (){
-                        Navigator.pushNamed(context, 'home_screen', arguments: LayoutArguments(5));
+                        Navigator.pushNamed(context, 'home_screen', arguments: LayoutArguments(1));
                       },
                       child: Container(
-                        width: 70,
+                        width: 80,
                         child: Column(
                           children: [
                             Container(
@@ -46,18 +53,69 @@ class _HomePageState extends State<HomePage> {
                                 borderRadius: BorderRadius.circular(50),
                                 color: kPrimaryColor,
                               ),
-                              padding: EdgeInsets.all(15),
-                              child: Icon(Icons.discount_outlined, color: Colors.grey, size: 35,)
+                              padding: const EdgeInsets.all(15),
+                              child: const Icon(Icons.discount_outlined, color: Colors.grey, size: 35,)
                               ),
-                            SizedBox(height: 10,),
-                            Text('Offers & promotions', style: TextStyle(color: kPrimaryColor, fontSize: 15), textAlign: TextAlign.center,),
+                            const SizedBox(height: 10,),
+                            const Text('Offers & promotions', style: TextStyle(color: kPrimaryColor, fontSize: 15), textAlign: TextAlign.center,),
                           ],
                         ),
                       ),
                     ),
-                    SizedBox(width: 50,),
+                    const SizedBox(width: 50,),
                      Container(
-                      width: 70,
+                      width: 80,
+                       child: GestureDetector(
+                          onTap: (){
+                            Navigator.pushNamed(context, 'home_screen', arguments: LayoutArguments(2));
+                          },
+                         child: Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: kPrimaryColor,
+                              ),
+                              padding: const EdgeInsets.all(15),
+                              child: const Icon(Icons.bar_chart_outlined, color: Colors.grey, size: 35,)
+                              ),
+                            const SizedBox(height: 10,),
+                            const Text('Customer Engagement', style: TextStyle(color: kPrimaryColor, fontSize: 15), textAlign: TextAlign.center,),
+                          ],
+                                         ),
+                       ),
+                     ),
+                  ],
+                ),
+    
+                const SizedBox(height: 20,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.pushNamed(context, 'home_screen', arguments: LayoutArguments(3));
+                      },
+                      child: Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              color: kPrimaryColor,
+                            ),
+                            padding: const EdgeInsets.all(15),
+                            child: const Icon(Icons.location_city_outlined, color: Colors.grey, size: 35,)
+                            ),
+                          const SizedBox(height: 10,),
+                          const Text('Outlets', style: TextStyle(color: kPrimaryColor, fontSize: 15), ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 50,),
+                     GestureDetector(
+                        onTap: (){
+                          Navigator.pushNamed(context, 'home_screen', arguments: LayoutArguments(8));
+                        },
                        child: Column(
                         children: [
                           Container(
@@ -65,50 +123,14 @@ class _HomePageState extends State<HomePage> {
                               borderRadius: BorderRadius.circular(50),
                               color: kPrimaryColor,
                             ),
-                            padding: EdgeInsets.all(15),
-                            child: Icon(Icons.bar_chart_outlined, color: Colors.grey, size: 35,)
+                            padding: const EdgeInsets.all(15),
+                            child: const Icon(Icons.share_outlined, color: Colors.grey, size: 35,)
                             ),
-                          SizedBox(height: 10,),
-                          Text('Customer Engagement', style: TextStyle(color: kPrimaryColor, fontSize: 15), textAlign: TextAlign.center,),
+                          const SizedBox(height: 10,),
+                          const Text('Marketing', style: TextStyle(color: kPrimaryColor, fontSize: 15), ),
                         ],
-                                       ),
+                                         ),
                      ),
-                  ],
-                ),
-    
-                SizedBox(height: 20,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: kPrimaryColor,
-                          ),
-                          padding: EdgeInsets.all(15),
-                          child: Icon(Icons.settings_outlined, color: Colors.grey, size: 35,)
-                          ),
-                        SizedBox(height: 10,),
-                        Text('Settings', style: TextStyle(color: kPrimaryColor, fontSize: 15), ),
-                      ],
-                    ),
-                    SizedBox(width: 50,),
-                     Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: kPrimaryColor,
-                          ),
-                          padding: EdgeInsets.all(15),
-                          child: Icon(Icons.share_outlined, color: Colors.grey, size: 35,)
-                          ),
-                        SizedBox(height: 10,),
-                        Text('Marketing', style: TextStyle(color: kPrimaryColor, fontSize: 15), ),
-                      ],
-                    ),
                   ],
                 ),
               ]),
@@ -116,13 +138,65 @@ class _HomePageState extends State<HomePage> {
     
           Container(
             width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-            child: Column(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+            child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Latest Rewards by you', style: TextStyle(color: kTextColor, fontSize: 20)),
             ]),
+          ),
+
+          Expanded(
+            child: StreamBuilder(
+              stream: db.collection("Offers").where("merchantID", isEqualTo: login.merchantID).snapshots(),
+              builder: (context, snapshot) {
+                
+                // if (snapshot.data!.docs.isEmpty) {
+                //   return CircularProgressIndicator(
+                //     color: kButtonColor,
+                //   );
+                // }
+
+                if(snapshot.data!.docs.length == 0) {
+                  return Center(
+                    child: Text('No offers available'),
+                  );
+                }
+                return GridView.builder(
+                    
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisExtent: 170
+                    ),
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      var offerTitle = snapshot.data!.docs[index].data()['title'].toString();
+                      return GestureDetector(
+                        onTap: (){
+                           Navigator.pushNamed(context, 'view_offer', arguments: ViewOfferArguments(snapshot.data!.docs[index].id));
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(20),
+                          margin: const EdgeInsets.all(10),
+                          
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: kSecondaryColor,
+                            image: DecorationImage(
+                              image: AssetImage('assets/images/card.png'),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                      
+                          child: Text(offerTitle, style: const TextStyle(color: Colors.white, fontSize: 20),)
+                        ),
+                      );
+                    }
+                );
+              }
+            ),
           )
+
         ],
       ),
       Positioned(
@@ -130,7 +204,7 @@ class _HomePageState extends State<HomePage> {
             right:0,
             child: RawMaterialButton(
               onPressed: (){
-                
+                Navigator.pushNamed(context, 'home_screen', arguments: LayoutArguments(6));
               },
               fillColor: kButtonColor,
               elevation: 2,

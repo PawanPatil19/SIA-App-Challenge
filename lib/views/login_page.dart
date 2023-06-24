@@ -1,10 +1,19 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sia_app/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sia_app/views/layout.dart';
+import 'package:local_auth/local_auth.dart';
 
 
- User? user;
+User? user;
+var merchantID;
+var merchantData;
+
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,11 +23,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
   FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore db = FirebaseFirestore.instance;
   String email = '';
   String password = '';
-
- 
 
   @override
   Widget build(BuildContext context) {
@@ -137,6 +146,16 @@ class _LoginPageState extends State<LoginPage> {
                           password: this.password
                         );
                         user = userCredential.user;
+                        db.collection('Merchants').where('merchantEmail', isEqualTo: email).get().then((value) {
+                          value.docs.forEach((element) {
+                            for (var doc in value.docs) {
+                              merchantID = doc.id;
+                              merchantData = doc.data();
+                            }
+                          });
+                        });
+                        print(merchantID);
+                        print(merchantData);
                         Navigator.pushNamed(context, 'home_screen', arguments: LayoutArguments(0));
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'user-not-found') {
@@ -166,9 +185,8 @@ class _LoginPageState extends State<LoginPage> {
                   child: Text('Not yet Registered?', style: TextStyle(color: kTextColor, fontSize: 15),)
                 ),
 
-                SizedBox(height: 20,),
 
-                IconButton(onPressed: () {}, icon: Icon(Icons.fingerprint, color: kSecondaryColor, size: 50,)),
+                
         
         
               ],
@@ -176,4 +194,10 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
   }
+}
+
+enum _SupportState {
+  unknown,
+  supported,
+  unsupported,
 }

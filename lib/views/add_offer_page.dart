@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sia_app/constants.dart';
+import 'package:sia_app/views/view_offer_page.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -21,11 +22,13 @@ class _AddOfferPageState extends State<AddOfferPage> {
   List<String> locations = [];
   String terms = '';
 
+  String? offerID;
+
 
   bool isCheckedSingapore = false;
   bool isCheckedIndia = false;
 
-  String currentUser = login.user!.email!;
+  String creatorMerchant = login.merchantID;
   
 
 
@@ -37,29 +40,33 @@ class _AddOfferPageState extends State<AddOfferPage> {
   }
 
   CollectionReference offers = FirebaseFirestore.instance.collection('Offers');
+  
 
   Future<void> addOffer() {
       // Call the user's CollectionReference to add a new offer
       return offers
           .add({
-            'user': currentUser,
             'title': title, 
             'description': description, 
             'startDate': startDate, 
             'endDate': endDate, 
             'locations': locations, 
             'terms': terms, 
-            'createdBy': currentUser
+            'createdAt': DateTime.now(),
+            'merchantID': creatorMerchant,
+            'isAvailable': true
           })
-          .then((value) => print("Offer Added for user: $currentUser"))
+          .then((docRef) => setState(() {
+            offerID = docRef.id;
+            print('Offer ID: ' + offerID!);
+            Navigator.pushNamed(context, 'view_offer', arguments: ViewOfferArguments(offerID!));
+          }))
           .catchError((error) => print("Failed to add offeer: $error"));
     }
 
 
   @override
   Widget build(BuildContext context) {
-    print('Locations: ' + locations.toString());
-    print('Current User: ' + currentUser);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       width: MediaQuery.of(context).size.width,
@@ -253,10 +260,10 @@ class _AddOfferPageState extends State<AddOfferPage> {
 
                           Row(
                             children: <Widget>[
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ), //SizedBox
-                              Text(
+                              const Text(
                                 'India',
                                 style: TextStyle(
                                   fontSize: 20,

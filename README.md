@@ -1,16 +1,4 @@
-# sia_app
+## SIA App Challenge 2023 - Kris+ Connect
 
-A new Flutter project.
+Introducing our revolutionary merchant onboarding app, kris+ Connect, designed to seamlessly scale your business across multiple countries, manage your promotional offers, allowing customers to enjoy rewards while adhering to regulatory requirements. 
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

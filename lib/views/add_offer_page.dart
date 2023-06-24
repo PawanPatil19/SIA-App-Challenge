@@ -28,7 +28,7 @@ class _AddOfferPageState extends State<AddOfferPage> {
   bool isCheckedSingapore = false;
   bool isCheckedIndia = false;
 
-  String currentUser = login.user!.email!;
+  String creatorMerchant = login.merchantID;
   
 
 
@@ -40,19 +40,21 @@ class _AddOfferPageState extends State<AddOfferPage> {
   }
 
   CollectionReference offers = FirebaseFirestore.instance.collection('Offers');
+  
 
   Future<void> addOffer() {
       // Call the user's CollectionReference to add a new offer
       return offers
           .add({
-            'user': currentUser,
             'title': title, 
             'description': description, 
             'startDate': startDate, 
             'endDate': endDate, 
             'locations': locations, 
             'terms': terms, 
-            'createdBy': currentUser
+            'createdAt': DateTime.now(),
+            'merchantID': creatorMerchant,
+            'isAvailable': true
           })
           .then((docRef) => setState(() {
             offerID = docRef.id;
@@ -258,10 +260,10 @@ class _AddOfferPageState extends State<AddOfferPage> {
 
                           Row(
                             children: <Widget>[
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ), //SizedBox
-                              Text(
+                              const Text(
                                 'India',
                                 style: TextStyle(
                                   fontSize: 20,

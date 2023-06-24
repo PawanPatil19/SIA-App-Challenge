@@ -1,10 +1,16 @@
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sia_app/constants.dart';
 import 'package:sia_app/views/add_offer_page.dart';
+import 'package:sia_app/views/add_outlet_page.dart';
+import 'package:sia_app/views/customer_engagement.dart';
 import 'package:sia_app/views/home_page.dart';
-import 'package:sia_app/views/login_page.dart';
+import 'package:sia_app/views/login_page.dart' as login;
+import 'package:sia_app/views/marketing_page.dart';
 import 'package:sia_app/views/offers_page.dart';
+import 'package:sia_app/views/qr_generate_page.dart';
+import 'package:sia_app/views/settings_page.dart';
 
 class LayoutArguments {
   final int index;
@@ -25,22 +31,32 @@ class _LayoutState extends State<Layout> {
   int _pageIndex = 0;
   int mainPanelIndex = 0;
   String currentUser = '';
+  bool bottomNavigationUsed = false;
 
   void _onItemTapped(int index) {
     setState(() {
+      if (_selectedIndex != index) {
+        bottomNavigationUsed = true;
+      } else {
+        bottomNavigationUsed = false;
+      }
       _selectedIndex = index;
+      print(_selectedIndex);
       mainPanelIndex = _selectedIndex;
     });
   }
 
   static final List<Widget> _pages = <Widget>[
     HomePage(),
-    LoginPage(),
-    LoginPage(),
-    LoginPage(),
-    LoginPage(),
     OfferPage(),
-    AddOfferPage()
+    CustomerEngagementPage(),
+    SettingsPage(),
+    QRGeneratePage(),
+    OfferPage(),
+    AddOfferPage(),
+    AddOutletPage(),
+    MarketingPage()
+
   ];
 
   @override
@@ -48,10 +64,24 @@ class _LayoutState extends State<Layout> {
     final args = ModalRoute.of(context)!.settings.arguments as LayoutArguments?;
     //print('Arguments: ' + args!.index.toString());
     if (args != null) _pageIndex = args.index;
-    //mainPanelIndex = _pageIndex;
+    
+    if (bottomNavigationUsed) {
+      mainPanelIndex = _selectedIndex;
+      
+    } else {
+      mainPanelIndex = _pageIndex;
+      if (_pageIndex >= 0 && _pageIndex <=4) {
+        _selectedIndex = _pageIndex;
+      } else {
+        _selectedIndex = 0;
+      }
+    }
+
     print('Page Index: ' + _pageIndex.toString());
     print('Selected Index: ' + _selectedIndex.toString());
-    mainPanelIndex = _pageIndex;
+    //mainPanelIndex = _pageIndex;
+    print('Main Panel Index: ' + mainPanelIndex.toString());
+
 
     
     return Scaffold(
@@ -66,9 +96,9 @@ class _LayoutState extends State<Layout> {
         // add a icon to right
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.person_sharp),
-            onPressed: () {
-              // do something
+            icon: const Icon(Icons.logout_outlined),
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
               Navigator.pushNamed(context, 'login_page');
               
             },
@@ -94,16 +124,16 @@ class _LayoutState extends State<Layout> {
               icon: Icon(Icons.home),
             ),
             CustomNavigationBarItem(
+              icon: Icon(Icons.local_offer_outlined),
+            ),
+            CustomNavigationBarItem(
               icon: Icon(Icons.analytics_outlined),
             ),
             CustomNavigationBarItem(
-              icon: Icon(Icons.notifications_none_outlined),
+              icon: Icon(Icons.location_on_outlined),
             ),
             CustomNavigationBarItem(
-              icon: Icon(Icons.settings_outlined),
-            ),
-            CustomNavigationBarItem(
-              icon: Icon(Icons.logout_outlined),
+              icon: Icon(Icons.qr_code_2_outlined),
             ),
             
             
